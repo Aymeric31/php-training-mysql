@@ -13,7 +13,6 @@
     $name_db = 'reunion_island';
     $user_db = 'root';
     $pass_db = 'root';
-
     try {
   // Connecting using the PDO object.
       $connection = new PDO("mysql:host=$host_db; dbname=$name_db;charset=utf8", $user_db, $pass_db);
@@ -24,7 +23,7 @@
 
   // Iterating over the data and printing it.
       foreach($result as $row) {
-        echo ( '<tr><td>'.$row['id']. ' </td><td> '. $row['name']. ' </td><td> '. $row['difficulty']. '</td><td>' . $row['duration']. '</td><td>'. $row['height_difference'].  '</td></tr>');
+        echo ( '<tr><td>'. $row['id']. ' </td><td> <a href="update.php?id='. $row['id'].'">'. $row['name']. '</a> </td><td> '. $row['difficulty']. '</td><td>' . $row['duration']. '</td><td>'. $row['height_difference'].  '</td></tr>');
       }
   // Closing the connection.
       // $connection = null;
