@@ -2,11 +2,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	
 	<title>Ajouter une randonnée</title>
 	<link rel="stylesheet" href="css/basics.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-	<?php
+	<?php 
 	$host_db = 'localhost';
 	$name_db = 'reunion_island';
 	$user_db = 'root';
@@ -27,7 +28,7 @@
 		$height_difference = $row['height_difference'];
 	}
 	?>
-	<a href="/php-pdo/read.php">Liste des données</a>
+	<a href="index.php">Liste des données</a>
 	<h1>Ajouter</h1>
 	<form action="" method="post">
 		<div>
@@ -41,9 +42,9 @@
 
 				<option <?php if ($difficulty=="très facile"){echo " selected "; } ?> value="très facile">Très facile</option>
 				<option <?php if ($difficulty=="facile"){echo " selected "; } ?> value="facile">Facile</option>
-				<option <?php if ($difficulty=="très facile"){echo " selected "; } ?> value="moyen">Moyen</option>
-				<option <?php if ($difficulty=="très facile"){echo " selected "; } ?> value="difficile">Difficile</option>
-				<option <?php if ($difficulty=="très facile"){echo " selected "; } ?> value="très difficile">Très difficile</option>
+				<option <?php if ($difficulty=="moyen"){echo " selected "; } ?> value="moyen">Moyen</option>
+				<option <?php if ($difficulty=="difficile"){echo " selected "; } ?> value="difficile">Difficile</option>
+				<option <?php if ($difficulty=="très difficile"){echo " selected "; } ?> value="très difficile">Très difficile</option>
 			</select>
 		</div>
 
@@ -61,6 +62,22 @@
 		</div>
 		<button type="submit" name="button">Envoyer</button>
 	</form>
-
+	<?php
+	if (isset($_POST['button'])) {
+		$name = $_POST['name'];
+		$distance = intval($_POST['distance']);
+		$duration = $_POST['duration'];
+		$difficulty = $_POST['difficulty'];
+		$height_difference = intval($_POST['height_difference']);
+		$sth = $connection->prepare('UPDATE hiking SET name = :name ,difficulty = :difficulty ,distance = :distance ,duration = :duration ,height_difference = :height_difference WHERE id = '. $id . ';' );
+		$res = $sth->execute(array(
+			':name' => $name,
+			':difficulty'=> $difficulty,
+			':distance' => $distance,
+			':duration'=> $duration,
+			':height_difference'=> $height_difference
+			));
+	}
+	?>
 </body>
 </html>
